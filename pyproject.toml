@@ -1,0 +1,35 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "pyxelplatformer"
+version = "0.1.0"
+description = ""
+authors = ["backwardspy <backwardspy@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyxel = "^1.4.3"
+
+[tool.poetry.group.dev.dependencies]
+black = "^21.11-beta.1"
+pylint = "^2.12.1"
+mypy = "^0.910"
+isort = "^5.10.1"
+pytest = "^6.2.5"
+pytest-cov = "^3.0.0"
+ptpython = "^3.0.20"
+
+[tool.pylint.messages_control]
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "invalid-name",
+    "no-self-use",
+]
+
+[tool.mypy]
+ignore_missing_imports = true
