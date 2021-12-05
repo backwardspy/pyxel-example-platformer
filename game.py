@@ -28,20 +28,17 @@ PLAYER_TILE = 1
 WALL_TILES = [2, 3, 4, 5]
 
 
-def check_collision(x, y):
+def check_collision(x, y, w, h):
     """
-    Returns true if the given coordinates are inside a wall tile. This checks a
-    bounding box the size of a single tile.
+    Returns true if the given rectangle is inside a wall tile.
     """
     tilemap = pyxel.tilemap(0)
 
-    # position in tilemap coordinates.
-    # it's possible for the player to cover up to 4 tiles at the same time,
-    # so we have to check in several places.
+    # rectangle's corners in tile coordinates.
     tx0 = int(x // TILE_SIZE)
     ty0 = int(y // TILE_SIZE)
-    tx1 = int((x + TILE_SIZE - 1) // TILE_SIZE)
-    ty1 = int((y + TILE_SIZE - 1) // TILE_SIZE)
+    tx1 = int((x + w - 1) // TILE_SIZE)
+    ty1 = int((y + h - 1) // TILE_SIZE)
 
     # return true if any tile covered by the player is a wall.
     for y in range(ty0, ty1 + 1):
@@ -87,7 +84,7 @@ class Actor:
         # we collide with something.
         while move != 0:
             # check if we can move in the desired direction.
-            if check_collision(self.x + sign, self.y):
+            if check_collision(self.x + sign, self.y, TILE_SIZE, TILE_SIZE):
                 # we hit something, so stop moving.
                 if on_collision:
                     on_collision()
@@ -121,7 +118,7 @@ class Actor:
         # we collide with something.
         while move != 0:
             # check if we can move in the desired direction.
-            if check_collision(self.x, self.y + sign):
+            if check_collision(self.x, self.y + sign, TILE_SIZE, TILE_SIZE):
                 # we hit something, so stop moving.
                 if on_collision:
                     on_collision()
@@ -184,7 +181,7 @@ class Player(Actor):
         """
         Makes the player jump if they are on the ground.
         """
-        if check_collision(self.x, self.y + TILE_SIZE):
+        if check_collision(self.x, self.y + TILE_SIZE, TILE_SIZE, 1):
             self.vy = -JUMP_POWER
 
     def on_horizontal_collision(self):
