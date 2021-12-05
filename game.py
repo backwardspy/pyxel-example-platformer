@@ -28,17 +28,6 @@ PLAYER_TILE = 1
 WALL_TILES = [2, 3, 4, 5]
 
 
-def btni(key):
-    """
-    Returns 1 if the given key is pressed, 0 otherwise.
-    This is useful for directional keys, as in the following example:
-        move = btni(KEY_RIGHT) - btni(KEY_LEFT)
-    `move` would be set to 1 if right is pressed, -1 if left is pressed, and 0
-    if neither or both are pressed.
-    """
-    return int(pyxel.btn(key))
-
-
 def check_collision(x, y):
     """
     Returns true if the given coordinates are inside a wall tile. This checks a
@@ -159,7 +148,7 @@ class Player(Actor):
         self.move_y(self.vy, on_collision=self.on_vertical_collision)
 
         # apply horizontal user input directly to X-axis velocity.
-        self.vx = btni(pyxel.KEY_RIGHT) - btni(pyxel.KEY_LEFT)
+        self.vx = pyxel.btn(pyxel.KEY_RIGHT) - pyxel.btn(pyxel.KEY_LEFT)
 
         self.apply_gravity()
 
